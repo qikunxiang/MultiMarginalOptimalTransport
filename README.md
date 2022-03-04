@@ -1,7 +1,7 @@
 # Numerical method for feasible and approximately optimal solutions of multi-marginal optimal transport beyond discrete measures
 
 + By Ariel Neufeld and Qikun Xiang
-+ Article link (arXiv): pending
++ Article link (arXiv): https://arxiv.org/abs/2203.01633
 
 # Description of files
 

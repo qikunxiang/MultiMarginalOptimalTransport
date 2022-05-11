@@ -5,12 +5,12 @@
 
 # Description of files
 
-+ func/truncmixnorm/      contains functions related to truncated mixture of normal distributions
++ func/mixtruncnorm/      contains functions related to mixture of truncated normal distributions
     - norm\_partialexp.m: function used for computing a specific form of expectation related to a normal distribution
-    - truncmixnorm\_partialexp.m: function used for computing a specific form of expectation related to a truncated mixture of normal distributions
-    - truncmixnorm\_invcdf.m: function used for computing the inverse cumulative distribution function of a truncated mixture of normal distributions via the bisection method
-    - truncmixnorm\_momentset.m: function used for computing the integrals of the functions in an interpolation function basis (which characterizes a moment set) with respect to a truncated mixture of normal distributions
-    - truncmixnorm\_momentset\_construct.m: function used for iteratively constructing a moment set surrounding a truncated mixture of normal distributions with a given number of knots
+    - mixtruncnorm\_partialexp.m: function used for computing a specific form of expectation related to a mixture of truncated normal distributions
+    - mixtruncnorm\_invcdf.m: function used for computing the inverse cumulative distribution function of a mixture of truncated normal distributions via the bisection method
+    - mixtruncnorm\_momentset.m: function used for computing the integrals of the functions in an interpolation function basis (which characterizes a moment set) with respect to a mixture of truncated normal distributions
+    - mixtruncnorm\_momentset\_construct.m: function used for iteratively constructing a moment set surrounding a mixture of truncated normal distributions with a given number of knots
 
 + func/momentset1d/      contains functions related to moment set surrounding one-dimensional distribution with bounded support
     - momentset1d\_basisfunc\_bounded.m: function used for computing the values of the functions in an interpolation function basis for given inputs
@@ -51,8 +51,8 @@
 + Run exp/exp\_prepare2.m to generate a file exp/invcdf.mat containing the necessary inputs for approximating the inverse cumulative distribution functions of the marginals.
 
 ### Step 2: compute the lower and upper bounds on the optimal value of the multi-marginal optimal transport problem
-+ Run exp/exp\_run1\_LB.m to compute lower bounds by solving linear semi-infinite programming problems via the cutting plane algorithm. This will create an output file exp/rst\_LB.mat.
-+ Run exp/exp\_run2\_UB.m to compute upper bounds by first computing reassemblies and then approximating integrals with respect to the reassemblies via Monte Carlo integration. This will create an output file exp/rst\_UB.mat.
++ Run exp/exp\_run1\_LB.m to compute lower bounds by solving linear semi-infinite programming problems via the cutting plane algorithm. This will create an output file exp/exp\_rst\_LB.mat.
++ Run exp/exp\_run2\_UB.m to compute upper bounds by first computing reassemblies and then approximating integrals with respect to the reassemblies via Monte Carlo integration. This will create an output file exp/exp\_rst\_UB.mat.
 
 ### Step 3: plot the results
 + Run exp/exp\_plot\_results.m to plot the upper and lower bounds as well as the comparison between the differences between the bounds and their theoretical upper bounds.

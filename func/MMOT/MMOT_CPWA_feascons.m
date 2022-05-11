@@ -23,7 +23,7 @@ for i = 1:N
 
     if i == 1
         % include the first knot for the first dimension
-        basis = [1 - sum(basis, 2), basis];
+        basis = [1 - sum(basis, 2), basis]; %#ok<AGROW> 
     end
 
     % sanitize the output to prevent potential numerical issues

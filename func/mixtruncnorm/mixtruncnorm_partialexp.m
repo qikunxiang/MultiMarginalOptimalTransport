@@ -1,5 +1,5 @@
-function v = truncmixnorm_partialexp(mu, sig2, w, bounds, k1, k2, a, b)
-% Compute the partial expectation of a truncated mixture of normal
+function v = mixtruncnorm_partialexp(mu, sig2, w, bounds, k1, k2, a, b)
+% Compute the partial expectation of a mixture of truncated normal
 % distributions of the form E[(aX+b)I{k1,k2}], where mu, sig2, w are
 % vectors of the same length specifying the mean, variance, and weight of
 % each component of the mixture, bounds specify the truncation points, k1,
@@ -8,7 +8,8 @@ function v = truncmixnorm_partialexp(mu, sig2, w, bounds, k1, k2, a, b)
 %       mu: the mean parameter of each component
 %       sig2: the variance parameter (sigma squared) of each component
 %       w: the weight of each component
-%       bounds: the lower and upper truncation points
+%       bounds: the lower and upper truncation points (same for all
+%       components)
 %       k1: the left end point of the interval (lower integration limit)
 %       k2: the right end point of the interval (upper integration limit)
 %       a: the coefficient of X

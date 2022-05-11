@@ -1,28 +1,16 @@
-% Plot the experimental results
+load('exp/exp_inputs.mat', 'knot_no_list', 'err_bound_list');
+load('exp/exp_rst_LB.mat', 'LSIP_LB_list');
+load('exp/exp_rst_UB.mat', 'MMOT_UB_errbar', 'MMOT_UB_samps_cell');
 
-if ~exist('knotno_list', 'var') || ~exist('err_bound_list', 'var')
-    load('exp/inputs.mat', 'knotno_list', ...
-        'err_bound_list');
-end
-
-if ~exist('LSIP_LB_list', 'var')
-    load('exp/rst_LB.mat', 'LSIP_LB_list');
-end
-
-if ~exist('MMOT_UB_errbar', 'var') || ~exist('MMOT_UB_samps_cell', 'var')
-    load('exp/rst_UB.mat', 'MMOT_UB_errbar', ...
-        'MMOT_UB_samps_cell');
-end
-
-xx = knotno_list;
+xx = knot_no_list;
 
 figure('Position', [100, 100, 400, 400]);
 tight_subplot(1, 1, [0, 0], [0.09, 0.020], [0.11, 0.025]);
 hold on;
 handle_LB = plot(xx, LSIP_LB_list, '-*', 'Color', 'blue');
-UB_mean = zeros(length(knotno_list), 1);
+UB_mean = zeros(length(knot_no_list), 1);
 
-for stepid = 1:length(knotno_list)
+for stepid = 1:length(knot_no_list)
     UB_mean(stepid) = mean(MMOT_UB_samps_cell{stepid});
 end
 
@@ -40,7 +28,7 @@ ylabel('cost');
 
 
 
-figure('Position', [100, 100, 400, 400]);
+figure('Position', [500, 100, 400, 400]);
 tight_subplot(1, 1, [0, 0], [0.09, 0.020], [0.10, 0.025]);
 hold on;
 

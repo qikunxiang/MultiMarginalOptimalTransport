@@ -1,37 +1,33 @@
-% Run step 2: computing the upper bounds by first computing reassemblies
-% and then approximating the integrals with respect to the reassemblies via
-% Monte Carlo integration
-
-load('exp/inputs.mat');
-load('exp/invcdf.mat');
-load('exp/rst_LB.mat', 'coup_meas_cell');
+load('exp/exp_inputs.mat');
+load('exp/exp_invcdf.mat');
+load('exp/exp_rst_LB.mat', 'coup_meas_cell');
 
 % compute the inverse cdf of the marginal distributions
-marginv = @(i, u)(interp1(mixnorm_invcdf_cell{i, 1}, ...
-        mixnorm_invcdf_cell{i, 2}, u));
+marginv = @(i, u)(interp1(mixtrnorm_invcdf_cell{i, 1}, ...
+        mixtrnorm_invcdf_cell{i, 2}, u));
 
 % Monte Carlo sample numbers and repetition numbers
-sampno = 1e6;
-repno = 1000;
-batchsize = 1e5;
+samp_no = 1e6;
+rep_no = 1000;
+batch_size = 1e5;
 
-MMOT_UB_samps_cell = cell(stepno, 1);
-MMOT_UB_errbar = zeros(stepno, 2);
+MMOT_UB_samps_cell = cell(step_no, 1);
+MMOT_UB_errbar = zeros(step_no, 2);
 
-for stepid = 1:stepno
-    if isempty(coup_meas_cell{stepid})
+for step_id = 1:step_no
+    if isempty(coup_meas_cell{step_id})
         continue;
     end
     
-    rng(1000 + stepid, 'combRecursive');
+    rand_stream = RandStream('combRecursive', 'Seed', 1000 + step_id);
     
-    MMOT_UB_samps_cell{stepid} = MMOT_CPWA_primal_approx(CPWA, ...
-        coup_meas_cell{stepid}.atoms, coup_meas_cell{stepid}.probs, ...
-        marginv, sampno, repno, batchsize, true);
-    MMOT_UB_errbar(stepid, :) = quantile( ...
-        MMOT_UB_samps_cell{stepid}, [0.025, 0.975]);
+    fprintf('Setting %d:\n', step_id);
+    MMOT_UB_samps_cell{step_id} = MMOT_CPWA_primal_approx(CPWA, ...
+        coup_meas_cell{step_id}.atoms, coup_meas_cell{step_id}.probs, ...
+        marginv, samp_no, rep_no, batch_size, rand_stream, [], true);
+    MMOT_UB_errbar(step_id, :) = quantile( ...
+        MMOT_UB_samps_cell{step_id}, [0.025, 0.975]);
     
-    save('exp/rst_UB.mat', ...
-        'MMOT_UB_samps_cell', 'MMOT_UB_errbar', ...
-        'sampno', 'repno', 'batchsize');
+    save('exp/exp_rst_UB.mat', 'MMOT_UB_samps_cell', 'MMOT_UB_errbar', ...
+        'samp_no', 'rep_no', 'batch_size');
 end

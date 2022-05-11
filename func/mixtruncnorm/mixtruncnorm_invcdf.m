@@ -1,12 +1,13 @@
-function [z, iter] = truncmixnorm_invcdf(x, mu, sig2, w, bounds, tol)
+function [z, iter] = mixtruncnorm_invcdf(x, mu, sig2, w, bounds, tol)
 % Compute the inverse cumulative distribution function (cdf) of the
-% truncated mixture of normal distributions using bisection
+% mixture of truncated normal distributions using bisection
 % Inputs:
 %       x: inputs to the inverse cdf
 %       mu: mu parameter of each mixture component
 %       sig2: sigma^2 parameter of each mixture component
 %       w: weight of each mixture compoment
-%       bounds: the lower and upper truncation points
+%       bounds: the lower and upper truncation points (same for all the
+%       components)
 %       tol: the numerical tolerance (default is 1e-8)
 % Outputs:
 %       z: the corresponding inverse cdf values

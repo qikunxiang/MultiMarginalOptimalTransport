@@ -1,25 +1,22 @@
-% Preparation step 1: generating the problem settings as well as the
-% approximation scheme
-
 rng(1000, 'combRecursive');
 
 N = 50;
 
 % problem specification
 
-% the mu and sigma^2 parameters of the (truncated) mixture of normal
+% the mu and sigma^2 parameters of the mixture of truncated normal
 % marginals 
-mixnorm_mu_cell = cell(N, 1);
-mixnorm_sig2_cell = cell(N, 1);
-mixnorm_w_cell = cell(N, 1);
+mixtrnorm_mu_cell = cell(N, 1);
+mixtrnorm_sig2_cell = cell(N, 1);
+mixtrnorm_w_cell = cell(N, 1);
 % truncation limits 
-mixnorm_trunc = [-10; 10];
-mixnorm_compno = 3;
+mixtrnorm_trunc = [-10; 10];
+mixtrnorm_compno = 3;
 
 for i = 1:N
-    mixnorm_mu_cell{i} = randn(mixnorm_compno, 1) * 3;
-    mixnorm_sig2_cell{i} = 1 ./ gamrnd(3, 1, mixnorm_compno, 1);
-    mixnorm_w_cell{i} = ones(mixnorm_compno, 1) / mixnorm_compno;
+    mixtrnorm_mu_cell{i} = randn(mixtrnorm_compno, 1) * 3;
+    mixtrnorm_sig2_cell{i} = 1 ./ gamrnd(3, 1, mixtrnorm_compno, 1);
+    mixtrnorm_w_cell{i} = ones(mixtrnorm_compno, 1) / mixtrnorm_compno;
 end
 
 % f(x) = |dir1' * x - thres1| + |dir2' * x - thres2| ...
@@ -55,14 +52,14 @@ CPWA_Lip_bd = sum(abs(dir_plus), 1)' + sum(abs(dir_minus), 1)';
 LSIP_tolerance = 1e-4;
 
 % approximation scheme
-knotno_list = round(exp(linspace(log(5), log(100), 8)))';
-stepno = length(knotno_list);
+knot_no_list = round(exp(linspace(log(5), log(100), 8)))';
+step_no = length(knot_no_list);
 
-knots_cell = cell(stepno, 1);
-expval_cell = cell(stepno, 1);
-bd_cell = cell(stepno, 1);
-err_bound_list = zeros(stepno, 1);
-coef_num_cell = cell(stepno, 1);
+knots_cell = cell(step_no, 1);
+expval_cell = cell(step_no, 1);
+bd_cell = cell(step_no, 1);
+err_bound_list = zeros(step_no, 1);
+coef_num_cell = cell(step_no, 1);
 
 knots_hist_cell = cell(N, 1);
 bd_hist_cell = cell(N, 1);
@@ -70,12 +67,12 @@ bd_hist_cell = cell(N, 1);
 for i = 1:N
     % first generate the maximum number of knots
     [~, knots_hist_cell{i}, bd_hist_cell{i}] ...
-        = truncmixnorm_momentset_construct( ...
-        mixnorm_mu_cell{i}, mixnorm_sig2_cell{i}, mixnorm_w_cell{i}, ...
-        mixnorm_trunc, knotno_list(end));
+        = mixtruncnorm_momentset_greedy( ...
+        mixtrnorm_mu_cell{i}, mixtrnorm_sig2_cell{i}, ...
+        mixtrnorm_w_cell{i}, mixtrnorm_trunc, knot_no_list(end));
 end
 
-for stepid = 1:stepno
+for step_id = 1:step_no
     knots = cell(N, 1);
     expval = cell(N, 1);
     bd_list = zeros(N, 1);
@@ -83,25 +80,25 @@ for stepid = 1:stepno
     
     for i = 1:N
         % retrive a subset of knots
-        knots{i} = sort(knots_hist_cell{i}(1:knotno_list(stepid)), ...
+        knots{i} = sort(knots_hist_cell{i}(1:knot_no_list(step_id)), ...
             'ascend');
 
         % the corresponding upper bound on the Wasserstein-1 radius
-        bd_list(i) = bd_hist_cell{i}(knotno_list(stepid));
+        bd_list(i) = bd_hist_cell{i}(knot_no_list(step_id));
         
         % compute the corresponding integrals
-        expval{i} = truncmixnorm_momentset(mixnorm_mu_cell{i}, ...
-        mixnorm_sig2_cell{i}, mixnorm_w_cell{i}, knots{i});
+        expval{i} = mixtruncnorm_momentset(mixtrnorm_mu_cell{i}, ...
+        mixtrnorm_sig2_cell{i}, mixtrnorm_w_cell{i}, knots{i});
 
         % the number of coefficients (with the constant intercept)
         coef_num_list(i) = length(knots{i});
     end
     
-    knots_cell{stepid} = knots;
-    expval_cell{stepid} = expval;
-    bd_cell{stepid} = bd_list;
-    err_bound_list(stepid) = LSIP_tolerance + bd_list' * CPWA_Lip_bd;
-    coef_num_cell{stepid} = coef_num_list;
+    knots_cell{step_id} = knots;
+    expval_cell{step_id} = expval;
+    bd_cell{step_id} = bd_list;
+    err_bound_list(step_id) = LSIP_tolerance + bd_list' * CPWA_Lip_bd;
+    coef_num_cell{step_id} = coef_num_list;
 end
 
 marg1 = cell(N, 2);
@@ -117,8 +114,9 @@ end
 
 coup_init1 = joint_atoms;
 
-save('exp/inputs.mat', ...
-    'N', 'mixnorm_mu_cell', 'mixnorm_sig2_cell', 'mixnorm_w_cell', ...
-    'mixnorm_trunc', 'CPWA', 'CPWA_Lip_bd', 'LSIP_tolerance', ...
-    'knotno_list', 'stepno', 'knots_cell', 'expval_cell', 'bd_cell', ...
-    'err_bound_list', 'coef_num_cell', 'coup_init1', '-v7.3');
+save('exp/exp_inputs.mat', ...
+    'N', 'mixtrnorm_mu_cell', 'mixtrnorm_sig2_cell', ...
+    'mixtrnorm_w_cell', 'mixtrnorm_trunc', 'CPWA', 'CPWA_Lip_bd', ...
+    'LSIP_tolerance', 'knot_no_list', 'step_no', 'knots_cell', ...
+    'expval_cell', 'bd_cell', 'err_bound_list', 'coef_num_cell', ...
+    'coup_init1', '-v7.3');

@@ -16,7 +16,7 @@ assert(all(knots_diff > 0), 'all knots must be strictly increasing');
 
 v_raw = max(x - knots', 0);
 
-% compute the values of the alternative basis functions
+% compute the values of the basis functions
 v_diff = -diff(v_raw, 1, 2);
 v_diff_norm = v_diff ./ knots_diff';
 v = [-diff(v_diff_norm, 1, 2), v_diff_norm(:, end)];

@@ -3,13 +3,13 @@ function [LSIP_UB, LSIP_LB, coup_meas, dual_func, output, options] ...
 % Compute MMOT with CPWA cost function using the cutting plane algorithm
 % Inputs:
 %       CPWA: the specification of the CPWA cost function
-%       knots: the knots in each dimension where the implicit first knot is
-%       always 0 (and is not included) and the last knot in each dimension 
-%       is the truncation point of the distribution
+%       knots: the knots in each dimension where the first knot and the
+%       last knot in each dimension indicates the support of the
+%       distribution 
 %       expval: the expected values of the CPWA basis functions in each
 %       dimension
-%       coup_init: the initial coupling represented as a matrix of point
-%       indices
+%       coup_init: the initial coupling where each row represents an atom
+%       (weights are omitted)
 %       options: struct with the following fields:
 %           tolerance: numerical tolerance (default is 1e-4)
 %           reduce_cuts: struct containing options related to reducing cuts
@@ -33,7 +33,7 @@ function [LSIP_UB, LSIP_LB, coup_meas, dual_func, output, options] ...
 % Outputs:
 %       LSIP_UB: the computed upper bound for the LSIP problem
 %       LSIP_LB: the computed lower bound for the LSIP problem
-%       coup_meas: the optimized coupling in the form of point indices
+%       coup_meas: the optimized coupling with fields atoms and probs
 %       dual_func: struct representing the dual optimizer
 %           y0: the constant intercept
 %           y_cell: cell array containing the coefficients of interpolation

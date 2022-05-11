@@ -1,13 +1,13 @@
-function [v, wrad_ub, int_probs] = truncmixnorm_momentset(mu, sig2, w, ...
+function [v, wrad_ub, int_probs] = mixtruncnorm_momentset(mu, sig2, w, ...
     knots)
-% Construct a moment set around a truncated mixture of normal distribution
+% Construct a moment set around a mixture of truncated normal distribution
 % with bounded support
 % Inputs:
 %       mu: mu parameter of each mixture component
 %       sig2: sigma^2 parameter of each mixture component
 %       w: weight of each mixture compoment
 %       knots: knots of the CPWA functions where the first and last knots
-%       represent the points of truncation
+%       represent the points of truncation (same for all the components)
 % Output: 
 %       v: values of the expectation of the basis functions
 %       wrad_ub: a (crude) upper bound for the W1 radius of the resulting
@@ -29,10 +29,10 @@ kdiff = k2 - k1;
 assert(all(kdiff > 0), 'knots must be in ascending order');
 
 % integral to the right of each knot
-pexp1 = truncmixnorm_partialexp(mu, sig2, w, [t1; t2], ...
+pexp1 = mixtruncnorm_partialexp(mu, sig2, w, [t1; t2], ...
     k1, k2, -1 ./ kdiff, k2 ./ kdiff);
 % integral to the left of each knot
-pexp2 = truncmixnorm_partialexp(mu, sig2, w, [t1; t2], ...
+pexp2 = mixtruncnorm_partialexp(mu, sig2, w, [t1; t2], ...
     k1, k2, 1 ./ kdiff, -k1 ./ kdiff);
 
 % compute the probability in each interval

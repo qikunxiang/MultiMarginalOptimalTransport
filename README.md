@@ -47,8 +47,8 @@
 ## Running
 
 ### Step 1: generate the input files
-+ Run exp/exp\_prepare1.m to generate a file exp/inputs.mat containing the settings and the approximation scheme.
-+ Run exp/exp\_prepare2.m to generate a file exp/invcdf.mat containing the necessary inputs for approximating the inverse cumulative distribution functions of the marginals.
++ Run exp/exp\_prepare1.m to generate a file exp/exp\_inputs.mat containing the settings and the approximation scheme.
++ Run exp/exp\_prepare2.m to generate a file exp/exp\_invcdf.mat containing the necessary inputs for approximating the inverse cumulative distribution functions of the marginals.
 
 ### Step 2: compute the lower and upper bounds on the optimal value of the multi-marginal optimal transport problem
 + Run exp/exp\_run1\_LB.m to compute lower bounds by solving linear semi-infinite programming problems via the cutting plane algorithm. This will create an output file exp/exp\_rst\_LB.mat.

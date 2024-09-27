@@ -11,6 +11,10 @@ options = struct;
 options.log_file = CONFIG.LOGPATH_W2OTUB;
 options.display = true;
 
+% we will generate 10^7 samples per repetition for 1000 repetitions instead
+% of generating 10^8 samples per repetition for 100 repetitions due to
+% memory limitations; the repetitions will be regrouped and combined before
+% plotting
 MCsamp_num = 1e7;
 MCrep_num = 1000;
 

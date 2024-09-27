@@ -6,8 +6,7 @@ function CONFIG = global_config()
 CONFIG = struct;
 
 % root folder for all save files
-CONFIG.SAVEPATH_ROOT = ['~/Library/Mobile Documents/' ...
-    'com~apple~CloudDocs/MATLAB/'];
+CONFIG.SAVEPATH_ROOT = '../';
 
 % root folder for all log files
 CONFIG.LOGPATH_ROOT = '../Logs/';

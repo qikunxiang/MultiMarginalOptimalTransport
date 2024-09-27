@@ -4,7 +4,6 @@
 CONFIG = WBMM_config();
 
 load(CONFIG.SAVEPATH_INPUTS);
-load(CONFIG.SAVEPATH_OT);
 
 options = struct;
 options.log_file = CONFIG.LOGPATH_LSIP_MAIN;
@@ -13,9 +12,6 @@ options.reduce = struct;
 options.reduce.thres = 5e-2;
 options.reduce.max_iter = 8000;
 options.reduce.freq = 50;
-options.OT = struct;
-options.OT.optimization_options = struct;
-options.OT.optimization_options.Display = 'iter-detailed';
 
 global_options = struct;
 global_options.pool_size = 100;
@@ -74,14 +70,12 @@ for test_id = 1:test_num
 
     output = OT.run(initial_constr, tolerance);
 
-    OT.loadOptimalTransportInfo(OT_info_cell{test_id});
-
     LSIP_primal = OT.Runtime.PrimalSolution;
     LSIP_dual = OT.Runtime.DualSolution;
     LSIP_LB = OT.Runtime.LSIP_LB;
     LSIP_UB = OT.Runtime.LSIP_UB;
 
-    log_text = sprintf('test %2d: LB = %10.4f\n', test_id, MMOT_LB);
+    log_text = sprintf('test %2d: LB = %10.4f\n', test_id, LSIP_LB);
 
     fprintf(main_log_file, log_text);
     fprintf(log_text);

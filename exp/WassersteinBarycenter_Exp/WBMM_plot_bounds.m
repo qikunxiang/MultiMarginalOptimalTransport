@@ -15,6 +15,10 @@ end
 
 MMOT_UB_err = zeros(test_num, 2);
 
+% since we are generating 10^7 samples for 1000 repetitions instead of
+% generating 10^8 samples for 100 repetitions, we need to first regroup the
+% repetitions and compute their mean values
+
 for test_id = 1:test_num
     MMOT_UB_processed = mean(reshape(MMOT_UB_cell{test_id, 1}, [], 10), 2);
     qtt = quantile(MMOT_UB_processed, [0.025, 0.975]);

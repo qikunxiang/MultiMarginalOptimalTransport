@@ -78,7 +78,7 @@
 + All the relevant files used in this experiment are located in **exp/WassersteinBarycenter_Exp/**.
 + Part of the code uses mex functions which need to be compiled from C++. The Makefile for the compilation process only supports macOS (both Intel or Apple Silicon are supported). The Makefile needs to be modified for other platforms.
 + The Computational Geometry Algorithms Library (CGAL) must be installed. The installation can be done either directly from the [GitHub repository](https://github.com/CGAL/cgal/), or via a package manager such as [Homebrew](https://brew.sh) or [Conda](https://anaconda.org/anaconda/conda).
-+ Uncomment the line with `MEX_SUFFIX` in the following part of **mex/Makefile** depending on whether the machine has Intel or Apple Silicon chip.
++ Uncomment the line with `MEX_SUFFIX` in the following part of **mex/Makefile** depending on whether the machine has an Intel or Apple Silicon chip.
 
 		# Suffix of mex files on this operating system
 		# macOS with Apple Silicon

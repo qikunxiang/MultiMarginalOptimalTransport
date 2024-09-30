@@ -16,29 +16,29 @@
     - **HasTractableQuadraticIntegrals.m** defines an abstract class for probability measures which admits tractably computable first and second moments (i.e., mean vector and covariance matrix)
     - **ProbMeas1DInterval.m** defines an abstract class for one-dimensional probability meausres supported on compact intervals
     - **ProbMeas1DCPWADens.m** defines a class for one-dimensional probability measures supported on compact intervals with continuous piece-wise affine probability density functions
-    - **ProbMeas1DMixNorm.m** defines a class for one-dimensional probability measures supported on compact intervals with mixture of normal distributions (truncated to the intervals)
+    - **ProbMeas1DMixNorm.m** defines a class for one-dimensional probability measures supported on compact intervals whose distributions are mixtures of normal distributions (truncated to the support intervals)
     - **ProbMeas2DConvexPolytope.m** defines an abstract class for two-dimensional probability measures whose supports are contained in convex polytopes
     - **ProbMeas2DConvexPolytopeWithW2OT.m** defines an abstract class for two-dimensional probability measures whose supports are contained in convex polytopes which support semi-discrete 2-Wasserstein optimal transport (in additional to semi-discrete 1-Wasserstein optimal transport that is supported by all instances of ProbMeas2DConvexPolytope)
     - **ProbMeas2DAffDens.m** defines a class for two-dimensional probability measures whose supports are convex polytopes with affine probability density functions; supports semi-discrete 2-Wasserstein optimal transport
-    - **ProbMeas2DCPWADens.m** defines a class for two-dimensional probability measures whose supports are unions of edge-disjoint triangles with continuous piece-wise affine probability density functions; supports semi-discrete 2-Wasserstein optimal transport
-    - **ProbMeas2DMixNorm.m** defines a class for two-dimensional probability measures whose supports are unions of edge-disjoint triangles with mixture of multivariate normal distributions (truncated to the supports)
+    - **ProbMeas2DCPWADens.m** defines a class for two-dimensional probability measures whose supports are unions of interior-disjoint triangles with continuous piece-wise affine probability density functions; supports semi-discrete 2-Wasserstein optimal transport
+    - **ProbMeas2DMixNorm.m** defines a class for two-dimensional probability measures whose supports are unions of interior-disjoint triangles that correspond to mixtures of multivariate normal distributions (truncated to the supports)
 
-+ **mex/** contains C++ code used when solving the 2D Wasserstein barycenter problem
++ **mex/** contains the C++ code used when solving the 2D Wasserstein barycenter problem
     - **Makefile** is used for compiling the C++ code into mex files for MATLAB
     - **power\_diagram\_intersection.m** is an empty MATLAB file for creating the MATLAB interface for the mex function power\_diagram\_intersection; this function computes power diagrams corresponding to multiple collections of circles as well as the polygonal complex formed by their intersections; it is used in the global minimization oracle for the class MMOT2DWassersteinBarycenter
-    - **mesh\_intersect\_power\_diagram.m** is is an empty MATLAB file for creating the MATLAB interface for the mex function mesh\_intersect\_power\_diagram; this function computes a power diagram corresponding to a collection of circles as well as the polygonal complex formed by the intersection of this power diagram and a given triangular mesh; it is used when computing semi-discrete 2-Wasserstein optimal transport for the class ProbMeas2DCPWADens
+    - **mesh\_intersect\_power\_diagram.m** is an empty MATLAB file for creating the MATLAB interface for the mex function mesh\_intersect\_power\_diagram; this function computes a power diagram corresponding to a collection of circles as well as the polygonal complex formed by the intersection of this power diagram and a given triangular mesh; it is used when computing semi-discrete 2-Wasserstein optimal transport for the class ProbMeas2DCPWADens
     - **src/** contains the C++ source code
         - **power\_diagram\_intersection.hpp** is the C++ header file for all of the C++ code
         - **power\_diagram\_intersection.cpp** is the C++ source file containing the two functions power\_diagram\_intersection and mesh\_intersect\_power\_diagram
-        - **mex\_wrapper\_power\_diagram\_intersection.cpp** contains the mex wrapper class for the C++ function power\_diagram\_intersection implemented in power\_diagram\_intersection.cpp
-        - **mex\_wrapper\_mesh\_intersect\_power\_diagram.cpp** contains the mex wrapper class for the C++ function mesh\_intersect\_power\_diagram implemented in power\_diagram\_intersection.cpp
+        - **mex\_wrapper\_power\_diagram\_intersection.cpp** contains the mex wrapper class for the C++ function power\_diagram\_intersection implemented in **power\_diagram\_intersection.cpp**
+        - **mex\_wrapper\_mesh\_intersect\_power\_diagram.cpp** contains the mex wrapper class for the C++ function mesh\_intersect\_power\_diagram implemented in **power\_diagram\_intersection.cpp**
         - **test\_power\_diagram\_intersection.cpp** contains the C++ code for testing the function power\_diagram\_intersection
         - **test\_mesh\_intersect\_power\_diagram.cpp** contains the C++ code for testing the function mesh\_intersect\_power\_diagram
-        - **kdtree-cpp/** contains the C++ Kd-tree library implemented by Christoph Dalitz and Jens Wilberg (2018), which is used by power\_diagram\_intersection.cpp
+        - **kdtree-cpp/** contains the C++ Kd-tree library implemented by Christoph Dalitz and Jens Wilberg (2018), which is used by **power\_diagram\_intersection.cpp**
 
 + **utils/** contains additional utility functions and external libraries
     - **check\_triangulation\_simplicial\_cover.m** defines a function which checks whether a given triangular mesh satisfies the conditions of a simplicial cover
-    - **cleanup\_trangles.m** defines a function which iterates through a triangular mesh and remove the degenerate triangles (i.e., those triangles with close to 0 area)
+    - **cleanup\_trangles.m** defines a function which iterates through a triangular mesh and removes the degenerate triangles (i.e., those triangles with close to 0 area)
     - **comonotone\_coupling.m** defines a function which computes a coupling of several discrete probability measures (i.e., it implements Algorithm 0 in the paper)
     - **discrete\_OT.m** defines a function which computes discrete optimal transport with any cost function via linear programming; for large-scale discrete optimal transport problems this function becomes memory-inefficient and one should use the OTDiscrete class instead
     - **discrete\_reassembly\_1D.m** defines a function which computes a *reassembly* involving a discrete coupling and discrete one-dimensional marginals; gluing is done with respect to the comonotone couplings between the marginals
@@ -55,7 +55,7 @@
 + MATLAB (version 2024a or above) must be installed.
 + All folders and subfolders must be added to the MATLAB search path. 
 + Gurobi optimization (version 11.0.3 or above) must be installed and the relevant files must be added to the MATLAB search path. 
-+ Edit **exp/global_config.m** to change the directories for the save files and log files if necessary.
++ The file **exp/global_config.m** can be editted to change the directories for the save files and log files if necessary.
 
 ## Experiment 1: fluid dynamics
 
@@ -71,13 +71,13 @@
 + Run **IFMM\_plot\_maps.m** to plot the computed volume preserving maps at intermediate time points.
 + Run **IFMM\_plot\_trajectories.m** to plot the computed particle trajectories at intermediate time points.
 + Run **IFMM\_plot\_bounds.m** to plot the computed lower and upper bounds as well as the comparison between the computed sub-optimality estimates and their a priori upper bounds.
-+ 
+
 		
 ## Experiment 2: Wasserstein barycenter
 
 + All the relevant files used in this experiment are located in **exp/WassersteinBarycenter_Exp/**.
-+ Part of the code uses mex functions which need to be compiled from C++. The Makefile for the compilation process only supports macOS with both Intel or Apple Silicon. The Makefile needs to be modified for other platforms.
-+ The Computational Geometry Algorithms Library (CGAL) must be installed. The installation can be done either directly from the [GitHub repository] (https://github.com/CGAL/cgal/), or via a package manager such as [Homebrew] (https://brew.sh) or [Conda] (https://anaconda.org/anaconda/conda).
++ Part of the code uses mex functions which need to be compiled from C++. The Makefile for the compilation process only supports macOS (both Intel or Apple Silicon are supported). The Makefile needs to be modified for other platforms.
++ The Computational Geometry Algorithms Library (CGAL) must be installed. The installation can be done either directly from the [GitHub repository][https://github.com/CGAL/cgal/], or via a package manager such as [Homebrew](https://brew.sh) or [Conda](https://anaconda.org/anaconda/conda).
 + Uncomment the line with `MEX_SUFFIX` in the following part of **mex/Makefile** depending on whether the machine has Intel or Apple Silicon chip.
 
 		# Suffix of mex files on this operating system

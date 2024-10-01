@@ -1,0 +1,33 @@
+Change log of kd-tree library
+=============================
+
+Version 1.3 from 2024-01-08
+---------------------------
+
+ - error in searches with maximum distance (disacne_type == 0) fixed
+   fixes https://github.com/cdalitz/kdtree-cpp/issues/6
+   (thanks to Juliane Arning for implementing the fix)
+
+
+Version 1.2 from 2022-10-17
+---------------------------
+
+ - search functions k_nearest_neighbors and range_nearest_neighbors are
+   now thread safe, i.e., they can be called serveral times in parallel
+
+ - new property KdNode::index for optionally storing the point index
+
+ - exception thrown if vector nodes empty in constructor of KdTree
+
+
+Version 1.1 from 2020-12-02
+---------------------------
+
+ - removed "unused argument" warning of some compilers
+
+
+Version 1.0 from 2019-02-11
+---------------------------
+
+ - first release under BSD license
+

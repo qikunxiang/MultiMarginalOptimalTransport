@@ -234,7 +234,7 @@ classdef (Abstract) ProbMeas2DConvexPolytope < handle
                     OT_output.optim_output, OT_output.final_grad] ...
                     = fminunc(OT_obj_func, init_weights, options);
                 OT_cost = -objective_min;
-                OT_weights = [1; OT_weights];
+                OT_weights = [0; OT_weights];
     
                 if OT_output.exitflag == 1
                     obj.OT.Coupled = true;

@@ -24,8 +24,8 @@ line_width = 1.25;
 
 % figure of lower and upper bounds
 
-figure('Position', [400, 100, 400, 400]);
-ha = tight_subplot(1, 1, [0, 0], [0.085, 0.015], [0.105, 0.025]);
+figure('Position', [0, 100, 400, 250]);
+ha = tight_subplot(1, 1, [0, 0], [0.066, 0.018], [0.105, 0.025]);
 axes(ha(1));
 
 hold on;
@@ -57,19 +57,17 @@ ylabel('objective');
 
 % figure of sub-optimalities and error bounds
 
-figure('Position', [800, 100, 400, 400]);
-ha = tight_subplot(1, 1, [0, 0], [0.085, 0.015], [0.095, 0.025]);
+figure('Position', [400, 100, 400, 250]);
+ha = tight_subplot(1, 1, [0, 0], [0.066, 0.018], [0.105, 0.025]);
 axes(ha(1));
 
 hold on;
 
 handle_sub = errorbar(xx, OT_UB_mean_list - OT_LB_list, ...
     OT_UB_err(:, 1), OT_UB_err(:, 2), ...
-    'Marker', 'none', 'Color', 'red', 'LineStyle', ':', ...
-    'LineWidth', line_width);
+    'Marker', 'none', 'Color', 'red', 'LineStyle', ':', 'LineWidth', line_width);
 handle_th = plot(xx, THEB_list, ...
-    'Marker', 'diamond', 'Color', [17, 17, 80] / 255, ...
-    'LineStyle', '-', 'LineWidth', line_width);
+    'Marker', 'diamond', 'Color', 'black', 'LineStyle', '-', 'LineWidth', line_width);
 
 box on;
 grid on;

@@ -15,9 +15,8 @@ end
 
 MMOT_UB_err = zeros(test_num, 2);
 
-% since we are generating 10^7 samples for 1000 repetitions instead of
-% generating 10^8 samples for 100 repetitions, we need to first regroup the
-% repetitions and compute their mean values
+% since we are generating 10^7 samples for 1000 repetitions instead of generating 10^8 samples for 100 repetitions, we need to first 
+% regroup the repetitions and compute their mean values
 
 for test_id = 1:test_num
     MMOT_UB_processed = mean(reshape(MMOT_UB_cell{test_id, 1}, [], 10), 2);
@@ -42,20 +41,18 @@ line_width = 1.25;
 
 % figure of all lower and upper bounds
 
-figure('Position', [400, 100, 400, 400]);
-ha = tight_subplot(1, 1, [0, 0], [0.105, 0.015], [0.105, 0.025]);
+figure('Position', [0, 100, 400, 300]);
+ha = tight_subplot(1, 1, [0, 0], [0.135, 0.020], [0.105, 0.025]);
 axes(ha(1));
 
 hold on;
 
-handle_LB = plot(xx, MMOT_LB_list, 'Marker', 'o', 'Color', 'blue', ...
-    'LineStyle', '--', 'LineWidth', line_width);
+handle_LB = plot(xx, MMOT_LB_list, ...
+    'Marker', 'o', 'Color', 'blue', 'LineStyle', '--', 'LineWidth', line_width);
 handle_UB = plot(xx, MMOT_UB_mean_list, ...
-    'Marker', 'x', 'Color', 'red', 'LineStyle', ':', ...
-    'LineWidth', line_width);
+    'Marker', 'x', 'Color', 'red', 'LineStyle', ':', 'LineWidth', line_width);
 handle_W2OTUB = plot(xx, MMOT_W2OTUB_mean_list, ...
-    'Marker', '+', 'Color', 'green', 'LineStyle', '-.', ...
-    'LineWidth', line_width);
+    'Marker', '+', 'Color', 'green', 'LineStyle', '-.', 'LineWidth', line_width);
 
 box on;
 grid on;
@@ -79,8 +76,8 @@ ylabel('objective');
 % zoom-in of the first figure
 zoomin = 5:9;
 
-figure('Position', [800, 100, 400, 400]);
-ha = tight_subplot(1, 1, [0, 0], [0.105, 0.015], [0.11, 0.025]);
+figure('Position', [400, 100, 400, 300]);
+ha = tight_subplot(1, 1, [0, 0], [0.135, 0.020], [0.11, 0.025]);
 axes(ha(1));
 
 hold on;
@@ -119,23 +116,18 @@ ylabel('objective');
 
 % figure of sub-optimalities and error bounds
 
-figure('Position', [1200, 100, 400, 400]);
-ha = tight_subplot(1, 1, [0, 0], [0.105, 0.015], [0.095, 0.025]);
+figure('Position', [800, 100, 400, 300]);
+ha = tight_subplot(1, 1, [0, 0], [0.135, 0.020], [0.095, 0.025]);
 axes(ha(1));
 
 hold on;
 
-handle_sub = errorbar(xx, MMOT_UB_mean_list - MMOT_LB_list, ...
-    MMOT_UB_err(:, 1), MMOT_UB_err(:, 2), ...
-    'Marker', 'none', 'Color', 'red', 'LineStyle', ':', ...
-    'LineWidth', line_width);
-handle_W2OTsub = errorbar(xx, MMOT_W2OTUB_mean_list - MMOT_LB_list, ...
-    MMOT_W2OTUB_err(:, 1), MMOT_W2OTUB_err(:, 2), ...
-    'Marker', 'none', 'Color', 'green', 'LineStyle', '-.', ...
-    'LineWidth', line_width);
+handle_sub = errorbar(xx, MMOT_UB_mean_list - MMOT_LB_list, MMOT_UB_err(:, 1), MMOT_UB_err(:, 2), ...
+    'Marker', 'none', 'Color', 'red', 'LineStyle', ':', 'LineWidth', line_width);
+handle_W2OTsub = errorbar(xx, MMOT_W2OTUB_mean_list - MMOT_LB_list, MMOT_W2OTUB_err(:, 1), MMOT_W2OTUB_err(:, 2), ...
+    'Marker', 'none', 'Color', 'green', 'LineStyle', '-.', 'LineWidth', line_width);
 handle_th = plot(xx, MMOT_THEB_list, ...
-    'Marker', 'diamond', 'Color', [17, 17, 80] / 255, ...
-    'LineStyle', '-', 'LineWidth', line_width);
+    'Marker', 'diamond', 'Color', 'black', 'LineStyle', '-', 'LineWidth', line_width);
 
 box on;
 grid on;

@@ -7,7 +7,7 @@ function [empty, is_simpcover, condition_mat] ...
 % 1e-6. Thus, two interior-disjoint triangles that are too close to each 
 % other are considered illegal as well. 
 % Inputs: 
-%   vertices: two-clumn matrix containing the vertices of all triangles
+%   vertices: two-column matrix containing the vertices of all triangles
 %   triangles: three-column matrix containing the vertex indices in the
 %   triangulation
 % Output:

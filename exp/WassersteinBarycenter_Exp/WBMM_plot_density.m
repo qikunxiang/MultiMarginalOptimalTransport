@@ -4,6 +4,9 @@ CONFIG = WBMM_config();
 
 load(CONFIG.SAVEPATH_INPUTS);
 
+plot_testfuncs = true;
+plot_test_id = 1;
+
 % instantiate the marginals
 marg_cell = cell(marg_num, 1);
 marg_dens_cell = cell(marg_num, 1);
@@ -41,6 +44,14 @@ for marg_id = 1:marg_num
     plot_color.EdgeColor = 'interp';
     plot_color.FaceColor = 'interp';
     clim([0, dens_max]);
+
+    if plot_testfuncs
+        Meas = marg_cell{marg_id};
+        Meas.setSimplicialTestFuncs(marg_testfuncs_cell{plot_test_id}{marg_id}{:});
+        triplot(Meas.SimplicialTestFuncs.Triangles, ...
+            Meas.SimplicialTestFuncs.Vertices(:, 1), Meas.SimplicialTestFuncs.Vertices(:, 2), ...
+            'Color', 'green');
+    end
 
     box on;
     colormap('hot');

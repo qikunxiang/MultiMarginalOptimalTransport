@@ -52,9 +52,9 @@
 
 ## Configurations
 
-+ MATLAB (version 2024a or above) must be installed.
++ MATLAB (version 2024b or above) must be installed.
 + All folders and subfolders must be added to the MATLAB search path. 
-+ Gurobi optimization (version 11.0.3 or above) must be installed and the relevant files must be added to the MATLAB search path. 
++ Gurobi optimization (version 12.0.3 or above) must be installed and the relevant files must be added to the MATLAB search path. 
 + The following lines in the file **exp/global_config.m** can be editted to change the directories for the save files and log files if necessary.
 
 		% root folder for all save files
@@ -62,10 +62,14 @@
 
 		% root folder for all log files
 		CONFIG.LOGPATH_ROOT = '../Logs/';
++ Execute the following command to create the folders to store results computed by the reproducing kernel Hilbert space (RKHS) based algorithm and the neural network (NN) based algorithm.
+
+        mkdir exp/Comparisons/Saved
 
 ## Experiment 1: fluid dynamics
 
 + All the relevant files used in this experiment are located in **exp/IncompressibleFluid1D_Exp/**.
+
 
 ### Step 1: generate the input file
 + Run **IFMM\_prepare.m** to generate an input file containing the set-up of the experiment.
@@ -78,6 +82,54 @@
 + Run **IFMM\_plot\_trajectories.m** to plot the computed particle trajectories at intermediate time points.
 + Run **IFMM\_plot\_bounds.m** to plot the computed lower and upper bounds as well as the comparison between the computed sub-optimality estimates and their a priori upper bounds.
 
+### Step 4: run the two regularization-based algorithms
++ Execute the following commands to create the folders to store comparison results.
+
+        mkdir exp/Comparisons/Saved/Fluid
+        mkdir exp/Comparisons/Saved/Fluid/RKHS
+        mkdir exp/Comparisons/Saved/Fluid/RKHS/arr1
+        mkdir exp/Comparisons/Saved/Fluid/RKHS/arr2
+        mkdir exp/Comparisons/Saved/Fluid/NN
+        mkdir exp/Comparisons/Saved/Fluid/NN/arr1
+        mkdir exp/Comparisons/Saved/Fluid/NN/arr2
+
++ Run the following files in the folder **exp/Comparisons/** with Python: 
+    - **OT\_Fluid\_RKHS\_arr1\_5\_25000.py**
+    - **OT\_Fluid\_RKHS\_arr1\_5\_50000.py**
+    - **OT\_Fluid\_RKHS\_arr1\_10\_25000.py**
+    - **OT\_Fluid\_RKHS\_arr1\_10\_50000.py**
+    - **OT\_Fluid\_RKHS\_arr2\_5\_25000.py**
+    - **OT\_Fluid\_RKHS\_arr2\_5\_50000.py**
+    - **OT\_Fluid\_RKHS\_arr2\_10\_25000.py**
+    - **OT\_Fluid\_RKHS\_arr2\_10\_50000.py**
+    
+    - **OT\_Fluid\_NN\_arr1\_5\_25000.py**
+    - **OT\_Fluid\_NN\_arr1\_5\_50000.py**
+    - **OT\_Fluid\_NN\_arr1\_5\_500000.py**
+    - **OT\_Fluid\_NN\_arr1\_5\_5000000.py**
+    - **OT\_Fluid\_NN\_arr1\_10\_100000.py**
+    - **OT\_Fluid\_NN\_arr1\_10\_1000000.py**
+    - **OT\_Fluid\_NN\_arr1\_10\_10000000.py**
+    - **OT\_Fluid\_NN\_arr1\_20\_200000.py**
+    - **OT\_Fluid\_NN\_arr1\_20\_2000000.py**
+    - **OT\_Fluid\_NN\_arr1\_20\_20000000.py**
+    - **OT\_Fluid\_NN\_arr2\_5\_25000.py**
+    - **OT\_Fluid\_NN\_arr2\_5\_50000.py**
+    - **OT\_Fluid\_NN\_arr2\_5\_500000.py**
+    - **OT\_Fluid\_NN\_arr2\_5\_5000000.py**
+    - **OT\_Fluid\_NN\_arr2\_10\_100000.py**
+    - **OT\_Fluid\_NN\_arr2\_10\_1000000.py**
+    - **OT\_Fluid\_NN\_arr2\_10\_10000000.py**
+    - **OT\_Fluid\_NN\_arr2\_20\_200000.py**
+    - **OT\_Fluid\_NN\_arr2\_20\_2000000.py**
+    - **OT\_Fluid\_NN\_arr2\_20\_20000000.py**
+
+### Step 5: plot the comparison results
++ Run **IFMM\_compare\_plot\_objectives\_5steps.m**, **IFMM\_compare\_plot\_objectives\_10steps.m**, and **IFMM\_compare\_plot\_objectives\_20steps.m** to plot the objective values computed by the RKHS-based algorithm and the NN-based algorithm, and compare them with the lower and upper bounds computed by our algorithm.
+
++ Run **IFMM\_compare\_goftests.m** to perform the chi-squared goodness-of-fit tests on the sampled produced by the NN-based algorithm.
+
++ Run **IFMM\_compare\_plot\_dualfuncs\_5steps.m** to plot the dual solutions computed by our algorithm, the RKHS-based algorithm, and the NN-based algorithm.
 		
 ## Experiment 2: Wasserstein barycenter
 
@@ -117,18 +169,39 @@
 + Run **WBMM\_prepare.m** to generate an input file containing the set-up of the experiment.
 
 ### Step 2: run the experiment and generate the output files
-+ Run **WBMM\_run.m** to compute the lower bounds for the optimal value of the Wasserstein barycenter problem. The outputs will be saved in an output file. 
-+ Run **WBMM\_OT.m** to compute the pairwise semi-discrete 1-Wasserstein optimal transport for the marginals. The outputs will be saved in an output file. 
-+ Run **WBMM\_UB.m** to compute the upper bounds for the optimal value of the Wasserstein barycenter problem using the semi-discrete 1-Wasserstein optimal couplings. The outputs will be saved in an output file. 
-+ Run **WBMM\_W2OT.m** to compute the pairwise semi-discrete 2-Wasserstein optimal transport for the marginals. The outputs will be saved in an output file. 
-+ Run **WBMM\_W2OTUB.m** to compute the upper bounds for the optimal value of the Wasserstein barycenter problem using the semi-discrete 2-Wasserstein optimal couplings. The outputs will be saved in an output file. 
++ Run **WBMM\_run\_main.m** to compute the lower bounds for the optimal value of the Wasserstein barycenter problem. The outputs will be saved in an output file. 
++ Run **WBMM\_run\_OT.m** to compute the pairwise semi-discrete 1-Wasserstein optimal transport for the marginals. The outputs will be saved in an output file. 
++ Run **WBMM\_run\_UB.m** to compute the upper bounds for the optimal value of the Wasserstein barycenter problem using the semi-discrete 1-Wasserstein optimal couplings. The outputs will be saved in an output file. 
++ Run **WBMM\_run\_W2OT.m** to compute the pairwise semi-discrete 2-Wasserstein optimal transport for the marginals. The outputs will be saved in an output file. 
++ Run **WBMM\_run\_W2OTUB.m** to compute the upper bounds for the optimal value of the Wasserstein barycenter problem using the semi-discrete 2-Wasserstein optimal couplings. The outputs will be saved in an output file. 
++ Run **WBMM\_run\_dualfuncs.m** to evaluate the functions in the dual solutions at a given grid.
 
 ### Step 3: plot the results
 + Run **WBMM\_plot\_density.m** to plot the probability density functions of the input measures.
 + Run **WBMM\_plot\_histogram.m** to plot the histograms of the computed approximate Wasserstein barycenters. 
 + Run **WBMM\_plot\_bounds.m** to plot the computed lower and upper bounds as well as the comparison between the computed sub-optimality estimates and their a priori upper bounds.
 
+### Step 4: run the two regularization-based algorithms
++ Run **WBMM\_export\_density.m** to save the density functions of the marginals in JSON format.
 
++ Execute the following commands to create the folders to store comparison results.
+
+        mkdir exp/Comparisons/Saved/WassersteinBarycenter
+        mkdir exp/Comparisons/Saved/WassersteinBarycenter/RKHS
+        mkdir exp/Comparisons/Saved/WassersteinBarycenter/NN
+
++ Run the following files in the folder **exp/Comparisons/** with Python: 
+    - **OT\_WassersteinBarycenter\_RKHS\_25000.py**
+    - **OT\_WassersteinBarycenter\_RKHS\_50000.py**
+    - **OT\_WassersteinBarycenter\_RKHS\_100000.py**
+    - **OT\_WassersteinBarycenter\_NN\_50000.py**
+    - **OT\_WassersteinBarycenter\_NN\_500000.py**
+    - **OT\_WassersteinBarycenter\_NN\_5000000.py**
+
+### Step 5: plot the comparison results
++ Run **WBMM\_compare\_plot\_objectives.m** to plot the objective values computed by the RKHS-based algorithm and the NN-based algorithm, and compare them with the lower and upper bounds computed by our algorithm.
+
++ Run **WBMM\_compare\_plot\_dualfuncs.m** to plot the dual solutions computed by our algorithm, the RKHS-based algorithm, and the NN-based algorithm (this figure is not shown in the paper).
 
 ## Experiment 3: continuous piece-wise affine cost function
 + All the relevant files used in this experiment are located in **exp/CPWACost_Exp/**.

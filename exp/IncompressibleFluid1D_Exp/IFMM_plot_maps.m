@@ -5,7 +5,7 @@ CONFIG = IFMM_config();
 load(CONFIG.SAVEPATH_INPUTS);
 load(CONFIG.SAVEPATH_OUTPUTS);
 
-plot_timestep_num_index = 9;
+plot_timestep_num_index = 3;
 plot_testfunc_num_index = 6;
 timestep_num = timestep_num_list(plot_timestep_num_index);
 

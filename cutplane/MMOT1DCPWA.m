@@ -1391,7 +1391,9 @@ classdef MMOT1DCPWA < LSIPMinCuttingPlaneAlgo
 
             vec = result.x;
             primal_sol = struct;
-            primal_sol.Constant = vec(1) - violation;
+
+            % since violation is non-positive, we shift the first function downwards
+            primal_sol.Constant = vec(1) + violation;
 
             knot_coefs = zeros(obj.Storage.TotalKnotNum, 1);
             knot_coefs(obj.Storage.DeciVarIndicesInTestFuncs) = vec(2:end);
@@ -1467,7 +1469,7 @@ classdef MMOT1DCPWA < LSIPMinCuttingPlaneAlgo
                     [n, 1]);
 
                 % generate from the conditional distributions
-                samp_cell = marg.conditionalRandSample( ...
+                samp_cell = marg.conditionalRandSample((1:n)', ...
                     atom_num_list, rand_stream);
 
                 % fill in the coupled samples from the continuous marginals

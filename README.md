@@ -55,7 +55,7 @@
 + MATLAB (version 2024a or above) must be installed.
 + All folders and subfolders must be added to the MATLAB search path. 
 + Gurobi optimization (version 11.0.3 or above) must be installed and the relevant files must be added to the MATLAB search path. 
-+ The following lines in the file **exp/global_config.m** can be editted to change the directories for the save files and log files if necessary.
++ The following lines in the file **exp/global_config.m** can be edited to change the directories for the save files and log files if necessary.
 
 		% root folder for all save files
 		CONFIG.SAVEPATH_ROOT = '../';

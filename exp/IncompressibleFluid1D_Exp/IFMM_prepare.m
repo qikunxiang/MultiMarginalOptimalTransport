@@ -13,7 +13,7 @@ arrangement2.values = [1; 0; 1; 0; 1];
 
 arrangements = {arrangement1; arrangement2};
 
-timestep_num_list = (4:2:20)';
+timestep_num_list = [5; 10; 20];
 testfunc_knot_num_list = [4; 8; 16; 32; 64; 128] + 1;
 
 save(CONFIG.SAVEPATH_INPUTS, ...

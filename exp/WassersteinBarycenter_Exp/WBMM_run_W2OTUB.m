@@ -1,5 +1,4 @@
-% Compute the lower and upper bounds for the 2-Wasserstein barycenter
-% problem
+% Compute the lower and upper bounds for the 2-Wasserstein barycenter problem
 
 CONFIG = WBMM_config();
 
